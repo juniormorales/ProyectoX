@@ -65,8 +65,6 @@ using namespace std;
 struct cuenta{
 	string nombre;
 	string apell;
-	string direc;
-	string pais;
 	string usua;
 	string contra;
 	string pin;
@@ -118,6 +116,7 @@ void ingreso(cuenta usu[]){
 	cin>>p;
 	cout<<"Pin:";
 	cin>>n;
+	system("cls");
 	for(i=0;i<100;i++){
 		if(u==usu[i].usua && p==usu[i].contra && n==usu[i].pin){
 			cout<<"Bienvenido, "<<u<<endl;
@@ -125,7 +124,6 @@ void ingreso(cuenta usu[]){
 			mainusuario();
 		}
 	}
-	system("cls");
 	while(t==0){
 	cout<<"Usuario erroneo/no existe!"<<endl;
 	cout<<"(a) Desea volver a intentar?"<<endl;
@@ -176,23 +174,34 @@ int menuusu(){
 void crear(cuenta usu[]){
 	cin.ignore(256,'\n');
 	static int k=0;
+	string u;
+	int i;
 	cout<<"-.-.-.-.-.CREA TU CUENTA.-.-.-.-.-.-"<<endl;
 	cout<<"nombre:";
 	getline(cin,usu[k].nombre);
 	cout<<"apellido:";
 	getline(cin,usu[k].apell);
-	cout<<"direccion:";
-	getline(cin,usu[k].direc);
-	cout<<"pais:";
-	getline(cin,usu[k].pais);
 	cout<<"usuario:";
 	getline(cin,usu[k].usua);
 	cout<<"password:";
 	getline(cin,usu[k].contra);
+	cout<<"reingrese su password: "<<endl;
+	getline(cin,u);
+	if(u!=usu[k].contra){
+		cout<<"el password no son iguales"<<endl;
+		cout<<"reingrese su password: "<<endl;
+		getline(cin,u);
+		}
 	cout<<"pin unico:";
 	getline(cin,usu[k].pin);
 	cout<<"correo:";
 	getline(cin,usu[k].correo);
+	for(i=0;i<100;i++){
+		if(usu[k].correo==usu[i].correo){
+			cout<<"ya se ha creado una cuenta con este correo!"<<endl;
+		}
+	}
 	cout<<"cuenta creada exitosamente!"<<endl;
+	Sleep(10000);
 	system("cls");
 }
