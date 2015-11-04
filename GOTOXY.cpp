@@ -1,63 +1,71 @@
 # ProyectoX
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h> 
-#include <iostream>
-using namespace std;
- void gotoxy(int x,int y){  
-      HANDLE hcon;  
-      hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
-      COORD dwPos;  
-      dwPos.X = x;  
-      dwPos.Y= y;  
-      SetConsoleCursorPosition(hcon,dwPos);  
- }
- 
- int registro(char,char);
- int main(){
- 	char c[10], id[10];
-	system ("color 9F");
-	for(int j=4;j<76;j++){
-			gotoxy(j,3);
-			cout<<"=";
-			gotoxy(j,21);
-			cout<<"=";
-	}
-	gotoxy(76,3);cout<<"+";
-	gotoxy(3,3);cout<<"+";
-	gotoxy(3,20);cout<<"+";
-	gotoxy(76,20);cout<<"+";
-	
-	for(int k=3;k<20;k++){
-			gotoxy(3,k);
-			cout<<endl;
-			gotoxy(3,k+1);
-			cout<<"|";
-			gotoxy(76,k+1);
-			cout<<"|";
-	}
-	gotoxy(34,5);cout<<"PROSHEKTO X";
-	gotoxy(10,9);cout<<"Ingrese su id : ";
-	for(int i=38;i<65;i++){
-		gotoxy(i,8);cout<<"-";
-		gotoxy(i,10);cout<<"-";
-	}
-	gotoxy(37,9);cout<<"|";
-	gotoxy(65,9);cout<<"|";
-	gotoxy(40,9);cin>>id;
-	
-	gotoxy(10,15);cout<<"Ingrese su contrasenha : ";
-	for(int i=38;i<65;i++){
-		gotoxy(i,14);cout<<"-";
-		gotoxy(i,16);cout<<"-";
-	}
-	gotoxy(37,15);cout<<"|";
-	gotoxy(65,15);cout<<"|";
-	gotoxy(40,15);cin>>c;
-	
+#include <conio.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <windows.h> 
+ #include <iostream>
+ using namespace std;
+  void gotoxy(int x,int y){  
+       HANDLE hcon;  
+       hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
+       COORD dwPos;  
+       dwPos.X = x;  
+       dwPos.Y= y;  
+       SetConsoleCursorPosition(hcon,dwPos);  
+  }
+  
+  int registro(char,char);
+  int main(){
+  	string u,p,n;
+ 	for(int j=1;j<110;j++){
+ 			gotoxy(j,0);
+ 			cout<<char(205);
+ 			gotoxy(j,27);
+ 			cout<<char(205);
+ 	}
+ 	gotoxy(110,0);cout<<char(187);
+ 	gotoxy(1,0);cout<<char(201);
+ 	gotoxy(1,27);cout<<char(200);
+ 	gotoxy(110,27);cout<<char(188);
+ 	
+ 	for(int k=0;k<26;k++){
+ 			gotoxy(1,k);
+ 			cout<<endl;
+ 			gotoxy(1,k+1);
+ 			cout<<char(186);
+ 			gotoxy(110,k+1);
+ 			cout<<char(186);
+ 	}
+ 	gotoxy(48,1);cout<<"PROYECTO X";
+ 	gotoxy(5,3);cout<<"Ingrese su ID: ";
+ 	for(int i=29;i<56;i++){
+ 		gotoxy(i,2);cout<<"-";
+ 		gotoxy(i,4);cout<<"-";
+ 	}
+ 	gotoxy(28,3);cout<<"|";
+ 	gotoxy(56,3);cout<<"|";
+ 	gotoxy(30,3);cin>>u;
+ 	
+ 	gotoxy(5,8);cout<<"Ingrese su password: ";
+ 	for(int i=29;i<56;i++){
+ 		gotoxy(i,7);cout<<"-";
+ 		gotoxy(i,9);cout<<"-";
+ 	}
+ 	gotoxy(28,8);cout<<"|";
+ 	gotoxy(56,8);cout<<"|";
+ 	gotoxy(30,8);cin>>p;
+ 	
+	gotoxy(5,8);cout<<"Ingrese su pin unico: ";
+ 	for(int i=29;i<56;i++){
+ 		gotoxy(i,7);cout<<"-";
+ 		gotoxy(i,9);cout<<"-";
+ 	}
+ 	gotoxy(28,8);cout<<"|";
+ 	gotoxy(56,8);cout<<"|";
+ 	gotoxy(30,8);cin>>p;
+	getch(); 
+  }  
 
-
- }  
  //parte inicial
 #include <iostream>
 #include <windows.h>
@@ -83,7 +91,10 @@ void crear(cuenta []);
 int menuprinc();
 int menuusu();
 void mainusuario();
+int mainadmin();
+void menuadmin();
 int main(){
+	usu[0]={"Franco","Mecca","francois","oliveros1000","g2e","sthp","turno4"};
 	int o,v=1;
 	while(v==1){
 	o=menuprinc();
@@ -118,11 +129,17 @@ void ingreso(cuenta usu[]){
 	cin>>n;
 	system("cls");
 	for(i=0;i<100;i++){
-		if(u==usu[i].usua && p==usu[i].contra && n==usu[i].pin){
+		if(u==usu[i].usua && p==usu[i].contra && n==usu[i].pin && n!="g2e"){
 			cout<<"Bienvenido, "<<u<<endl;
 			t=1;
 			mainusuario();
 		}
+		if(u==usu[i].usua && p==usu[i].contra && n=="g2e"){
+			cout<<"Bienvenido, "<<u<<endl;
+			t=1;
+		mainadmin();
+		}
+
 	}
 	while(t==0){
 	cout<<"Usuario erroneo/no existe!"<<endl;
@@ -173,7 +190,7 @@ int menuusu(){
 	return a;}
 void crear(cuenta usu[]){
 	cin.ignore(256,'\n');
-	static int k=0;
+	static int k=3;
 	string u;
 	int i,j,t=0;
 	cout<<"-.-.-.-.-.CREA TU CUENTA.-.-.-.-.-.-"<<endl;
@@ -215,4 +232,25 @@ void crear(cuenta usu[]){
 	cout<<"cuenta creada exitosamente!"<<endl;
 	Sleep(2000);
 	system("cls");
+}
+int mainadmin(){
+	int a;
+	cout<<"-.-.-.-.-.-.BIENVENIDO-.-.-.-.-.-"<<endl;
+	cout<<"(1) Administrar cuentas"<<endl;
+	cout<<"(2) Tienda"<<endl;
+	cout<<"(3) Cerrar sesion"<<endl;
+	cin>>a;
+	system("cls");
+	return a;}
+void menuadmin(){
+	int o,v=1;
+	while(v==1){
+	o=mainadmin();
+	switch(o){
+		case 1: //administrar(usu); break;
+		case 2: //tienda(usu); break;
+		case 3: v=0; break;		
+	}
+	}
+	main();
 }
