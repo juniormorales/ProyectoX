@@ -175,7 +175,7 @@ void crear(cuenta usu[]){
 	cin.ignore(256,'\n');
 	static int k=0;
 	string u;
-	int i;
+	int i,j,t=0;
 	cout<<"-.-.-.-.-.CREA TU CUENTA.-.-.-.-.-.-"<<endl;
 	cout<<"nombre:";
 	getline(cin,usu[k].nombre);
@@ -183,6 +183,16 @@ void crear(cuenta usu[]){
 	getline(cin,usu[k].apell);
 	cout<<"usuario:";
 	getline(cin,usu[k].usua);
+	while(t==0){
+		for(j=0;j<100;j++){
+		if(usu[k].correo==usu[j].correo && k!=j){
+			cout<<"Nombre de usuario no disponible!"<<endl;
+			cout<<"usuario:";
+			getline(cin,usu[k].usua);	
+		}
+		else {t=1;}
+		}
+	}	
 	cout<<"password:";
 	getline(cin,usu[k].contra);
 	cout<<"reingrese su password: "<<endl;
@@ -197,11 +207,12 @@ void crear(cuenta usu[]){
 	cout<<"correo:";
 	getline(cin,usu[k].correo);
 	for(i=0;i<100;i++){
-		if(usu[k].correo==usu[i].correo){
+		if(usu[k].correo==usu[i].correo && k!=i){
 			cout<<"ya se ha creado una cuenta con este correo!"<<endl;
 		}
 	}
+	k++;
 	cout<<"cuenta creada exitosamente!"<<endl;
-	Sleep(10000);
+	Sleep(2000);
 	system("cls");
 }
