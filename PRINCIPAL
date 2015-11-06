@@ -30,7 +30,7 @@ void marco(){
  			gotoxy(110,k+1);
  			cout<<char(186);
  	}
- 	gotoxy(48,3);cout<<"PROYECTO X";
+ 	gotoxy(48,23);cout<<"PROYECTO X";
 }
 struct cuenta{
 	string nombre;
@@ -40,6 +40,7 @@ struct cuenta{
 	string pin;
 	string correo;
 	string cod;
+	int verificador;
 };
 struct app{
 	string nom;
@@ -58,9 +59,10 @@ void menuadmin();
 void PERFIL(cuenta usu[],int ind);
 void MODIFICANDOPERFIL(cuenta usu[],int ind,char num);
 void OPCIONESPERFILMODIFICABLES(cuenta usu[],int ind);
+void VERIFICANDOCUENTA(cuenta usu[],int ind);
 int main(){
-	usu[0]={"Franco","Mecca","francosmp","francosmp","9876","stha-182@hotmail.com","leonardo"};
-	usu[1]={"Hector","Huapaya","hackerman","bitcoins","1234","hecdan89@hotmail.com","crack"};
+	usu[0]={"Franco","Mecca","francosmp","francosmp","9876","stha-182@hotmail.com","leonardo",0};
+	usu[1]={"Hector","Huapaya","hackerman","bitcoins","1234","hecdan89@hotmail.com","crack",0};
 	int v=1,usuCont=5;
 	char o;
 	while(v==1){
@@ -75,11 +77,11 @@ int main(){
 }
 char menuprinc(){
 	char a;
-	gotoxy(36,5);cout<<"-.-.-.-.-.-.BIENVENIDOS-.-.-.-.-.-"<<endl;
-	gotoxy(36,8);cout<<"(1) INGRESAR"<<endl;
-	gotoxy(36,11);cout<<"(2) CREAR USUARIO"<<endl;
-	gotoxy(36,14);cout<<"(3) SALIR"<<endl;
-	gotoxy(57,3);a=getch ();
+	gotoxy(36,4);cout<<"-.-.-.-.-.-.BIENVENIDOS-.-.-.-.-.-"<<endl;
+	gotoxy(36,9);cout<<"[1] INGRESAR"<<endl;
+	gotoxy(36,13);cout<<"[2] CREAR USUARIO"<<endl;
+	gotoxy(36,17);cout<<"[3] SALIR"<<endl;
+	gotoxy(57,23);a=getch ();
 	system("cls");
 	return a;
 }
@@ -87,7 +89,8 @@ void ingreso(cuenta usu[]){
 	string u="",p="",n="";
 	char resp;
 	int i,t=0,ind;
-	cout<<"INGRESE USUARIO Y CLAVE:"<<endl;
+	system("cls");
+	cout<<"INGRESANDO"<<endl;
 	cout<<"Usuario : ";
 	cin>>u;
 	cout<<"Password : ";
@@ -96,46 +99,43 @@ void ingreso(cuenta usu[]){
 	cin>>n;
 	system("cls");
 	for(i=0;i<100;i++){
-		if(u==usu[i].usua && p==usu[i].contra && n==usu[i].pin && n!="g2e"){
-			cout<<"Bienvenido, "<<u<<endl;
-			t=1;
+		if(u==usu[i].usua && usu[i].verificador>=3){
 			ind=i;
-			mainusuario(ind);
+			cout<<"Cuenta Bloqueada"<<endl;
+			cout<<"Sera redirigido para recuperar su cuenta"<<endl;
+			Sleep(3000);
+			VERIFICANDOCUENTA(usu,ind);			
 		}
-		if(u==usu[i].usua && p==usu[i].contra && n=="g2e"){
-			cout<<"Bienvenido, "<<u<<endl;
-			t=1;
-			ind=i;
-		mainadmin(ind);
+		else{
+			if(u==usu[i].usua && p==usu[i].contra && n==usu[i].pin && n!="g2e"){
+				cout<<"Bienvenido, "<<u<<endl;
+				t=1;
+				ind=i;
+				mainusuario(ind);
+			}
+			if(u==usu[i].usua && p==usu[i].contra && n=="g2e"){
+				cout<<"Bienvenido, "<<u<<endl;
+				t=1;
+				ind=i;
+			mainadmin(ind);
+			}
+			if(u==usu[i].usua && (p!=usu[i].contra or n!=usu[i].pin))
+				usu[i].verificador++;
 		}
-
 	}
 	while(t==0){
-	cout<<"Usuario erroneo/no existe!"<<endl;
-	cout<<"(1) Desea volver a intentar?"<<endl;
-	cout<<"(2) Volver al menu principal"<<endl;
-	resp=getch();
-	system("cls");
+		cout<<"Usuario erroneo/no existe!"<<endl;
+		cout<<"[1] Desea volver a intentar?"<<endl;
+		cout<<"[2] Volver al menu principal"<<endl;
+		resp=getch();
+		system("cls");
 		if(resp=='1'){
-			cout<<"Ingrese sus datos nuevo!"<<endl;
-		cout<<"Usuario:";
-		cin>>u;
-		cout<<"Password:";
-		cin>>p;
-		cout<<"Pin:";
-		cin>>n;
-			for(i=0;i<100;i++){
-				if(u==usu[i].usua && p==usu[i].contra && n==usu[i].pin){
-					cout<<"valido!";
-					t=1;
-				}
-			}
+			ingreso(usu);
 		}
 		else{
 			t=1;
 		}
-}
-	system("cls");
+	}
 }
 void mainusuario(int ind){
 	char o;
@@ -154,10 +154,10 @@ char menuusu(){
 	char a,x,y,z;
 	system("cls");
 	cout<<"-.-.-.-.-.-.BIENVENIDO-.-.-.-.-.-"<<endl;
-	cout<<"(1) Perfil"<<endl;
-	cout<<"(2) Mis apps"<<endl;
-	cout<<"(3) Tienda"<<endl;
-	cout<<"(4) Cerrar sesion"<<endl;
+	cout<<"[1] Perfil"<<endl;
+	cout<<"[2] Mis apps"<<endl;
+	cout<<"[3] Tienda"<<endl;
+	cout<<"[4] Cerrar sesion"<<endl;
 	
 	gotoxy(30,2);cin.clear(),cin>>a;
 	return a;
@@ -242,19 +242,19 @@ void PERFIL(cuenta usu[],int ind){ // int ind
 	char opc;
 	system("cls");
 	cin.ignore(256,'\n');
-	cout<<"ingrese codigo de seguridad: ";
+	cout<<"ingrese codigo de seguridad : ";
 	getline(cin,codPermisos);
 	if(codPermisos==usu[ind].cod){
 		system("cls");
-		cout<<"Nombre: "<<usu[ind].nombre<<endl;
-		cout<<"Apellido: "<<usu[ind].apell<<endl;
-		cout<<"Usuario: "<<usu[ind].usua<<endl;
-		cout<<"Contraseña: "<<usu[ind].contra<<endl;
-		cout<<"PIN: "<<usu[ind].pin<<endl;
-		cout<<"Correo: "<<usu[ind].correo<<endl;
-		cout<<"Codigo de Permisos: "<<usu[ind].cod<<endl;
+		cout<<"Nombre : "<<usu[ind].nombre<<endl;
+		cout<<"Apellido : "<<usu[ind].apell<<endl;
+		cout<<"Usuario : "<<usu[ind].usua<<endl;
+		cout<<"Contraseña : "<<usu[ind].contra<<endl;
+		cout<<"PIN : "<<usu[ind].pin<<endl;
+		cout<<"Correo : "<<usu[ind].correo<<endl;
+		cout<<"Codigo de Permisos : "<<usu[ind].cod<<endl;
 		cout<<"-----------------------------------------"<<endl;
-		cout<<"Para Modificar presione 'S', sino presione 'N' : ";opc=getch();
+		cout<<"Para Modificar presione 'S', sino presione otra tecla : ";opc=getch();
 		if(opc=='s' or opc=='S')
 			OPCIONESPERFILMODIFICABLES(usu,ind);
 		else
@@ -270,13 +270,13 @@ void PERFIL(cuenta usu[],int ind){ // int ind
 void MODIFICANDOPERFIL(cuenta usu[],int ind,char num){	
 	system("cls");
 	switch(num){
-		case '1': cout<<"Nuevo Nombre: ";cin>>usu[ind].nombre,mainusuario(ind);break;
-		case '2': cout<<"Nuevo Apellido:";cin>>usu[ind].apell,mainusuario(ind);break;
-		case '3': cout<<"Nuevo Usuario: ";cin>>usu[ind].usua,mainusuario(ind);break;
-		case '4': cout<<"Nuevo Contraseña: ";cin>>usu[ind].contra,mainusuario(ind);break;
-		case '5': cout<<"Nuevo PIN:";cin>>usu[ind].pin,mainusuario(ind);break;
-		case '6': cout<<"Nuevo Correo:";cin>>usu[ind].correo,mainusuario(ind);break;
-		case '7': cout<<"Nuevo Codigo de Permisos:";cin>>usu[ind].cod,mainusuario(ind);break;
+		case '1': cout<<"Nuevo Nombre : ";cin>>usu[ind].nombre,mainusuario(ind);break;
+		case '2': cout<<"Nuevo Apellido :";cin>>usu[ind].apell,mainusuario(ind);break;
+		case '3': cout<<"Nuevo Usuario : ";cin>>usu[ind].usua,mainusuario(ind);break;
+		case '4': cout<<"Nuevo Contraseña : ";cin>>usu[ind].contra,mainusuario(ind);break;
+		case '5': cout<<"Nuevo PIN :";cin>>usu[ind].pin,mainusuario(ind);break;
+		case '6': cout<<"Nuevo Correo :";cin>>usu[ind].correo,mainusuario(ind);break;
+		case '7': cout<<"Nuevo Codigo de Permisos :";cin>>usu[ind].cod,mainusuario(ind);break;
 		default : cout<<"Opcion Errada"<<endl,cout<<"Sera Redirigido"<<endl,Sleep(2000),mainusuario(ind);break;
 	}
 }
@@ -285,13 +285,45 @@ void OPCIONESPERFILMODIFICABLES(cuenta usu[],int ind){
 	
 	char num;	
 	system("cls");
-	cout<<"(1) Nombre"<<endl;
-	cout<<"(2) Apellido"<<endl;
-	cout<<"(3) Usuario"<<endl;
-	cout<<"(4) Contraseña"<<endl;
-	cout<<"(5) PIN"<<endl;
-	cout<<"(6) Correo"<<endl;
-	cout<<"(7) Codigo de Permisos"<<endl;
+	cout<<"[1] Nombre"<<endl;
+	cout<<"[2] Apellido"<<endl;
+	cout<<"[3] Usuario"<<endl;
+	cout<<"[4] Contraseña"<<endl;
+	cout<<"[5] PIN"<<endl;
+	cout<<"[6] Correo"<<endl;
+	cout<<"[7] Codigo de Permisos"<<endl;
 	cout<<"Ingrese el numero del dato a modificar : ";cin>>num;
 	MODIFICANDOPERFIL(usu,ind,num);
+}
+
+void VERIFICANDOCUENTA(cuenta usu[],int ind){
+	string nom,ape,usuc,con,pon,cor,cud;
+	system("cls");
+	cin.ignore(1024,'\n');
+	cout<<"Nombre : ";
+	getline(cin,nom);
+	cout<<"Apellido : ";
+	getline(cin,ape);
+	cout<<"Usuario : ";
+	getline(cin,usuc);
+	cout<<"Contraseña : ";
+	getline(cin,con);
+	cout<<"PIN : ";
+	getline(cin,pon);
+	cout<<"Correo : ";
+	getline(cin,cor);
+	cout<<"Codigo de Seguridad : ";
+	getline(cin,cud);
+	if(nom==usu[ind].nombre and ape==usu[ind].apell and usuc==usu[ind].usua and con==usu[ind].contra and pon==usu[ind].pin and cor==usu[ind].correo and cud==usu[ind].cod){
+		cout<<"Ingrese nueva contraseña : ";cin>>usu[ind].contra;
+		usu[ind].verificador=0;
+		cout<<"Guardado"<<endl;
+	}
+	else{
+		cout<<"Datos errados"<<endl;
+		cout<<"Ingrese nuevamente y sera redirigido"<<endl;		
+	}
+	Sleep(2000);
+	system("cls");
+	main();
 }
