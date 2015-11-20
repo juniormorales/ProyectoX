@@ -1,0 +1,228 @@
+#include <iostream>
+#include <math.h>
+#define PI 3.1415926
+#include <conio.h>
+#include <cstdlib>
+#include <windows.h>
+using namespace std;
+
+void gotoxy(int x,int y){  
+      HANDLE hcon;  
+      hcon = GetStdHandle(STD_OUTPUT_HANDLE);  
+      COORD dwPos;  
+      dwPos.X = x;  
+      dwPos.Y= y;  
+      SetConsoleCursorPosition(hcon,dwPos); 
+}
+void marco(){
+	system ("color 9A");
+	for(int j=4;j<76;j++){
+			gotoxy(j,3);
+			cout<<"=";
+			gotoxy(j,36);
+			cout<<"=";
+	}
+	for(int k=3;k<35;k++){
+			gotoxy(3,k);
+			cout<<endl;
+			gotoxy(3,k+1);
+			cout<<"|";
+			gotoxy(76,k+1);
+			cout<<"|";
+	}
+}
+void suma(float a, float b, float resul);
+void resta(float a, float b, float resul);
+void division(float a, float b, float resul);
+void multiplicacion(float a, float b, float resul);
+void raiz(float a, float resul);
+void potencia(float a, float b, float resul);
+void seno(float a, float resul);
+void coseno(float a, float resul);
+void tangente(float a, float resul);
+void cosecante(float a, float resul);
+void secante(float a, float resul);
+void cotangente(float a, float resul);
+void logna(float a, float resul);
+void logdec(float a, float resul);
+
+int main(){
+	float num1,num2,sol;
+	char menu;
+	int opcion;
+	do{
+	marco();
+	gotoxy(25,2);cout<<"Calculadora Multifuncional"<<endl;
+	gotoxy(5,4);cout<<"OPCIONES DE OPERACIONES MATEMATICAS:"<<endl;
+	gotoxy(5,6);cout<<"1. Suma"<<endl;
+	gotoxy(5,7);cout<<"2. Resta"<<endl;
+	gotoxy(5,8);cout<<"3. Multiplicacion"<<endl;
+	gotoxy(5,9);cout<<"4. Division"<<endl;
+	gotoxy(5,10);cout<<"5. Potencia"<<endl;
+	gotoxy(5,11);cout<<"6. Raiz cuadrada"<<endl<<"\n";
+	gotoxy(5,13);cout<<"OPCIONES DE OPERACIONES TRIGONOMETRICAS:"<<endl;
+	gotoxy(5,15);cout<<"7. Seno"<<endl;
+	gotoxy(5,16);cout<<"8. Coseno"<<endl;
+	gotoxy(5,17);cout<<"9. Tangente"<<endl;
+	gotoxy(5,18);cout<<"10. Cosecante"<<endl;
+	gotoxy(5,19);cout<<"11. Secante"<<endl;
+	gotoxy(5,20);cout<<"12. Cotangente"<<endl<<"\n";
+	gotoxy(5,22);cout<<"OPCIONES DE OPERACIONES LOGARITMICAS:"<<endl;
+	gotoxy(5,24);cout<<"13. Logaritmo Natural"<<endl;
+	gotoxy(5,25);cout<<"14. Logaritmo decimal"<<endl<<"\n";
+	gotoxy(5,27);cout<<"Ingresa una opcion: "; cin>>opcion;
+	
+	switch(opcion){
+		case 1: suma(num1,num2,sol);
+		break;
+		case 2: resta(num1,num2,sol);
+		break;
+		case 3: multiplicacion(num1,num2,sol);
+		break;
+		case 4: division(num1,num2,sol);
+		break;
+		case 5: potencia(num1,num2,sol);
+		break;
+		case 6: raiz(num1,sol);
+		break;
+		case 7: seno(num1,sol);
+		break;
+		case 8: coseno(num1,sol);
+		break;
+		case 9: tangente(num1,sol);
+		break;
+		case 10: cosecante(num1,sol);
+		break;
+		case 11: secante(num1,sol);
+		break;
+		case 12: cotangente(num1,sol);
+		break;
+		case 13: logna(num1,sol);
+		break;
+		case 14: logdec(num1,sol);
+		break;
+		default: cout<<"Opcion no valida";
+	}
+	cout<<endl;
+
+
+	gotoxy(5,33);cout<<"Deseas continuar?(S:si/N:no): "; cin>>menu;
+	if(menu=='S' or menu=='s')
+	system("cls");
+	else
+	gotoxy(5,31);system("PAUSE");
+	
+}while(menu=='S'or menu=='s');}
+	
+	
+void suma(float a, float b, float resul){
+	gotoxy(5,28);cout<<"Ingrese el primer numero a sumar: "; cin>>a;
+	gotoxy(5,29);cout<<"Ingrese el segundo numero a sumar: "; cin>>b;
+	resul=a+b;
+	gotoxy(5,31);cout<<"El resultado es: "<<resul<<endl;
+}
+
+void resta(float a, float b, float resul){
+	gotoxy(5,28);cout<<"Ingrese el primer numero a restar: "; cin>>a;
+	gotoxy(5,29);cout<<"Ingrese el segundo numero a restar: "; cin>>b;
+	resul=a-b;
+	gotoxy(5,31);cout<<"El resultado es: "<<resul<<endl;
+}
+
+void multiplicacion(float a, float b, float resul){
+	gotoxy(5,28);cout<<"Ingrese el primer numero a multiplicar: "; cin>>a;
+	gotoxy(5,29);cout<<"Ingrese el segundo numero a multiplicar: "; cin>>b;
+	resul=a*b;
+	gotoxy(5,31);cout<<"El resultado es: "<<resul<<endl;
+}
+
+void division(float a, float b, float resul){
+	gotoxy(5,28);cout<<"Ingrese el primer numero a dividir: "; cin>>a;
+	gotoxy(5,29);cout<<"Ingrese el segundo numero a dividir: "; cin>>b;
+	resul=a/b;
+	gotoxy(5,31);cout<<"El resultado es: "<<resul<<endl;
+}
+
+void potencia(float a, float b, float resul){
+	gotoxy(5,28);cout<<"Ingrese la base: "; cin>>a;
+	gotoxy(5,29);cout<<"Ingrese el exponente: "; cin>>b;
+	resul=pow(a,b);
+	gotoxy(5,31);cout<<"El resultado es: "<<resul<<endl;
+}
+
+void raiz(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el numero a radicar: "; cin>>a;
+	if(a<0){
+	gotoxy(5,30);cout<<"Error de sintaxis";}
+	else{
+	resul=sqrt(a);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;}
+}
+
+void seno(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el angulo en sexagesimales: "; cin>>a;
+	resul=sin(a*PI/180);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;
+}
+
+void coseno(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el angulo en sexagesimales: "; cin>>a;
+	resul=cos(a*PI/180);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;
+}
+
+void tangente(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el angulo en sexagesimales: "; cin>>a;
+	if(a==90 or a==270){
+	gotoxy(5,30);cout<<"Error de sintaxis";}
+	else{
+	resul=tan(a*PI/180);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;}
+}
+
+void cosecante(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el angulo en sexagesimales: "; cin>>a;
+	if(a==0 or a==180 or a==360){
+	gotoxy(5,30);cout<<"Error de sintaxis";}
+	else{
+	resul=1/sin(a*PI/180);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;	}
+}
+
+void secante(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el angulo en sexagesimales: "; cin>>a;
+	if(a==90 or a==270){
+	gotoxy(5,30);cout<<"Error de sintaxis";}
+	else{
+	resul=1/cos(a*PI/180);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;}		
+}
+
+void cotangente(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el angulo en sexagesimales: "; cin>>a;
+	if(a==0 or a==180 or a==360){
+	gotoxy(5,30);cout<<"Error de sintaxis";}
+	else{
+	resul=1/cos(a*PI/180);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;}		
+}
+
+void logna(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el modulo del logaritmo natural: "; cin>>a;
+	if(a<=0){
+	gotoxy(5,30); cout<<"Error de sintaxis"<<endl;	
+	}
+	else{
+	resul=log(a);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;}	
+}
+
+void logdec(float a, float resul){
+	gotoxy(5,28);cout<<"Ingrese el modulo del logaritmo decimal: "; cin>>a;
+	if(a<=0){
+	gotoxy(5,30);cout<<"Error de sintaxis"<<endl;	
+	}
+	else{
+	resul=log10(a);
+	gotoxy(5,30);cout<<"El resultado es: "<<resul<<endl;}	
+}
